@@ -14,7 +14,7 @@ int randn(int n) {
 
 /* Random number from (0, n] */
 int randnSafe(int n) {
-  return (rand()+1) % n; 
+  return (rand() % n) + 1; 
 }
 
 /* Random float from [0.0, 1.0] */
