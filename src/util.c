@@ -2,17 +2,17 @@
 
 #include "util.h"
 
-/* Random number from (0, RAND_MAX] */
+/* Random integer from (0, RAND_MAX] */
 int randSafe() {
   return rand() + 1; 
 }
 
-/* Random number from [0, n] */
+/* Random integer from [0, n] */
 int randn(int n) {
   return rand() % n; 
 }
 
-/* Random number from (0, n] */
+/* Random integer from (0, n] */
 int randnSafe(int n) {
   return (rand() % n) + 1; 
 }
