@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 
 #include "util.h"
 #include "config.h"
@@ -10,28 +9,34 @@
 #include "initialisation.h"
 
 /* The parameters/config */
-Config config;
+Config config = {
+  -1,          /* Seed, -1 == time(NULL) */
+  200,         /* Generations */
+  50,          /* Population Size */
+  "random",    /* Initialisation */
+  100,         /* Initial Max Size */
+  "intflip",   /* Mutation Op */
+  1,           /* Mutation Rate - Ops per individual */
+  "onepoint",  /* Crossover Op */
+  0.9f         /* Crossover Rate */
+};;
 
 int main(int argc, char **argv) {
  
+  /* Parse any options on the command line */
   getOpts(argc, argv);
 
-  Genotype **genotypes = createGenotypes(config.populationSize);
-  initialise(genotypes, config.populationSize);
+  /* Set rand seed */
+  setSeed();
+
+  /* Set operator functors */
+  setInitialiser();
+  setMutationOp();
+  setCrossoverOp();
+
+  /* Initialise the population */
+  Population *population = createPopulation(config.populationSize);
+  initialise(population, config.populationSize);
   
-  int i,j;
-  for (i = 0; i < config.populationSize; i++) {
-    for (j = 0; j < genotypes[i]->length; j++)
-      printf(" %d", genotypes[i]->codons[j]);
-    printf("\n");
-  }
-
-  crossover(genotypes[0], genotypes[1]);
-  for (i = 0; i < config.populationSize; i++) {
-    for (j = 0; j < genotypes[i]->length; j++)
-      printf(" %d", genotypes[i]->codons[j]);
-    printf("\n");
-  }
-
   return 0;
 }

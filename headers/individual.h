@@ -14,7 +14,8 @@ typedef char* Phenotype;
 
 typedef struct {
   Genotype *genotype;
-  Phenotype phenotype;
+  Phenotype *phenotype;
 } Individual;  
 
+typedef Individual Population;
 #endif

@@ -4,10 +4,10 @@
 #include "individual.h"
 
 /* Initialisation Operation Functor */
-void (*initialise)(Genotype **, int number);
+void (*initialise)(Population *, int size);
 
-void randomInitialisation(Genotype **population, int number);
+void randomInitialisation(Population *, int size);
 
-Genotype **createGenotypes(int number);
+Population *createPopulation(int size);
 
 #endif
