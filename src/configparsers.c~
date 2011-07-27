@@ -1,0 +1,8 @@
+#include <string.h>
+
+#include "confuse.h"
+
+int parseInitialiser(cfg_t *cfg, cfg_opt_t *opt, const char *value, void *result) {
+  if (strcmp(value == "random") == 0)
+    result = 0;
+}
