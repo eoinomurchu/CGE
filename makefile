@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-c -Wall -g
 LDFLAGS=
-SOURCES=src/initialisation.c src/genops.c src/main.c
+SOURCES=src/util.c src/initialisation.c src/genops.c src/main.c
 INCLUDES=-Iheaders -Ilibs/includes
 LIBS=-Llibs -lconfuse
 OBJECTS=$(SOURCES:.c=.o)
@@ -19,5 +19,5 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(INCLUDES) $(CFLAGS) $< -o $@
 
 clean:
-	rm $(EXECUTABLE)
-	rm $(OBJECTS)
+	rm -f $(EXECUTABLE)
+	rm -f $(OBJECTS)
