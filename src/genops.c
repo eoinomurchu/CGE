@@ -4,6 +4,7 @@
 #include "confuse.h"
 
 #include "genops.h"
+#include "util.h"
 #include "initialisation.h"
 
 extern cfg_t *config;
@@ -11,17 +12,17 @@ extern cfg_t *config;
 void intflipMutation(Genotype *individual) {
   int i; 
   for (i = 0; i < cfg_getint(config, "mutationRate"); i++)
-    individual->codons[rand()%individual->length] = rand();
+    individual->codons[randn(individual->length)] = rand();
 }
 
 void onepointCrossover(Genotype *parent, Genotype *spouse) {
   /* Only crossover with a certain probability */
-  if ((float)rand()/(float)RAND_MAX > cfg_getfloat(config, "crossoverProb"))
+  if (randf() > cfg_getfloat(config, "crossoverProb"))
     return;
 
   /* Get xo points - TODO get points from inside encoding region */
-  int parentPoint = rand()%parent->length;
-  int spousePoint = rand()%spouse->length;
+  int parentPoint = randn(parent->length);
+  int spousePoint = randn(spouse->length);
 
   int parentLength = parent->length - parentPoint;
   int spouseLength = spouse->length - spousePoint;

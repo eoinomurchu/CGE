@@ -5,6 +5,7 @@
 
 #include "confuse.h"
 
+#include "util.h"
 #include "genotype.h"
 #include "genops.h"
 #include "initialisation.h"
@@ -53,7 +54,11 @@ void getCrossoverOp() {
 int main(int argc, char **argv) {
  
   /* For testing TODO check config for seed */
-  srand(time(NULL));
+  int t = time(NULL);
+  if (argc == 2)
+    t = atoi(argv[1]);
+  srand(t);
+  printf("%d\n", t);
 
   readConfigFile();
   getInitialiser();
