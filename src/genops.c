@@ -29,16 +29,21 @@ void onepointCrossover(Genotype *parent, Genotype *spouse) {
   /* Increase chromosome capacity if required */
   if (parentPoint +  spouseLength > parent->maxLength) {
     parent->maxLength = parentPoint + spouseLength;
-    realloc(parent->codons, parent->maxLength*sizeof(unsigned int));
+    parent->codons = (unsigned int *) realloc(parent->codons, parent->maxLength*sizeof(unsigned int));
   }
   if (spousePoint + parentLength > spouse->maxLength) {
     spouse->maxLength = spousePoint + parentLength;
-    realloc(spouse->codons, spouse->maxLength*sizeof(unsigned int));
+    spouse->codons = (unsigned int*) realloc(spouse->codons, spouse->maxLength*sizeof(unsigned int));
   }
 
-  /* Simple temp buffer copying */
-  unsigned int *temp;
+  /* Perfrom crossover using temp buffer */
+  unsigned int *temp = malloc(parentLength*sizeof(unsigned int));
   memcpy(temp, (parent->codons + parentPoint), parentLength*sizeof(unsigned int));
   memcpy((parent->codons + parentPoint), (spouse->codons + spousePoint), spouseLength*sizeof(unsigned int));
   memcpy((spouse->codons + spousePoint), temp, parentLength*sizeof(unsigned int));
+  free(temp);
+
+  /* Update length */
+  parent->length -= (parentLength - spouseLength);
+  spouse->length += (parentLength - spouseLength);
 }

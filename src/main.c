@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "confuse.h"
 
@@ -51,7 +52,8 @@ void getCrossoverOp() {
 
 int main(int argc, char **argv) {
  
-  srand(1);
+  /* For testing TODO check config for seed */
+  srand(time(NULL));
 
   readConfigFile();
   getInitialiser();
@@ -64,14 +66,18 @@ int main(int argc, char **argv) {
   initialise(genotypes, populationSize);
   
   int i,j;
-  for (i = 0; i < populationSize; i++)
+  for (i = 0; i < populationSize; i++) {
     for (j = 0; j < genotypes[i]->length; j++)
-      printf("%p: %d\n", genotypes[i], genotypes[i]->codons[j]);
+      printf(" %d", genotypes[i]->codons[j]);
+    printf("\n");
+  }
 
-  mutate(genotypes[0]);
-  for (i = 0; i < populationSize; i++)
+  crossover(genotypes[0], genotypes[1]);
+  for (i = 0; i < populationSize; i++) {
     for (j = 0; j < genotypes[i]->length; j++)
-      printf("%p: %d\n", genotypes[i], genotypes[i]->codons[j]);
+      printf(" %d", genotypes[i]->codons[j]);
+    printf("\n");
+  }
 
   cfg_free(config);
   return 0;
