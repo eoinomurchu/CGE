@@ -6,7 +6,7 @@
 #include "confuse.h"
 
 #include "util.h"
-#include "genotype.h"
+#include "individual.h"
 #include "genops.h"
 #include "initialisation.h"
 

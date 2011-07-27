@@ -5,7 +5,6 @@
 
 #include "genops.h"
 #include "util.h"
-#include "initialisation.h"
 
 extern cfg_t *config;
 

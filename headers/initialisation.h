@@ -1,7 +1,7 @@
 #ifndef INITIALISATION_H
 #define INITIALISATION_H
 
-#include "genotype.h"
+#include "individual.h"
 
 /* Initialisation Operation Functor */
 void (*initialise)(Genotype **, int number);

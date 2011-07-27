@@ -1,7 +1,7 @@
 #ifndef GENOPS_H
 #define GENOPS_H
 
-#include "genotype.h"
+#include "individual.h"
 
 /* Mutation Operation Functor */
 void (*mutate)(Genotype *);

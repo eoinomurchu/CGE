@@ -1,11 +1,6 @@
 #ifndef INDIVIDUAL_H
 #define INDIVIDUAL_H
 
-typedef struct {
-  Genotype *genotype;
-  Phenotype phenotype;
-} Individual;  
-
 /* Genotype/Chromosome */
 typedef struct genotype {
   unsigned int *codons;
@@ -16,5 +11,10 @@ typedef struct genotype {
 } Genotype;
 
 typedef char* Phenotype;
+
+typedef struct {
+  Genotype *genotype;
+  Phenotype phenotype;
+} Individual;  
 
 #endif
