@@ -1,22 +1,19 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "confuse.h"
-
+#include "config.h"
 #include "genops.h"
 #include "util.h"
 
-extern cfg_t *config;
-
 void intflipMutation(Genotype *individual) {
   int i; 
-  for (i = 0; i < cfg_getint(config, "mutationRate"); i++)
+  for (i = 0; i < config.mutationRate; i++)
     individual->codons[randn(individual->length)] = rand();
 }
 
 void onepointCrossover(Genotype *parent, Genotype *spouse) {
   /* Only crossover with a certain probability */
-  if (randf() > cfg_getfloat(config, "crossoverProb"))
+  if (randf() > config.crossoverProb)
     return;
 
   /* Get xo points - TODO get points from inside encoding region */

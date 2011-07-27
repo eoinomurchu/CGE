@@ -12,7 +12,11 @@ typedef struct {
   unsigned int mutationRate;
 
   char *crossover;
-  unsigned float crossoverProb;
+  float crossoverProb;
 } Config;
+
+extern Config config;
+
+void getOpts(int, char **);
 
 #endif
