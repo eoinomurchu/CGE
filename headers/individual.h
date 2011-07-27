@@ -1,5 +1,10 @@
-#ifndef GENOTYPE_H
-#define GENOTYPE_H
+#ifndef INDIVIDUAL_H
+#define INDIVIDUAL_H
+
+typedef struct {
+  Genotype *genotype;
+  Phenotype phenotype;
+} Individual;  
 
 /* Genotype/Chromosome */
 typedef struct genotype {
@@ -9,5 +14,7 @@ typedef struct genotype {
   unsigned int maxLength;
   unsigned int encodingLength;
 } Genotype;
+
+typedef char* Phenotype;
 
 #endif
