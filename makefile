@@ -6,7 +6,7 @@ INCLUDES=-Iheaders -Ilibs/includes
 LIBS=-Llibs
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=cge
-BASEDIR=/Users/eoin/Workspaces/CGE
+BASEDIR=./
 
 all: $(SOURCES) $(EXECUTABLE)
 
