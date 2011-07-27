@@ -4,10 +4,11 @@
 
 /* Random integer from (0, RAND_MAX] */
 int randSafe() {
-  return rand() + 1; 
+  int r = rand() + 1; 
+  return r < 1 ? RAND_MAX : r;
 }
 
-/* Random integer from [0, n] */
+/* Random integer from [0, n) */
 int randn(int n) {
   return rand() % n; 
 }

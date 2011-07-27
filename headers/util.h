@@ -4,7 +4,7 @@
 /* Random number from (0, RAND_MAX] */
 int randSafe();
 
-/* Random number from [0, n] */
+/* Random number from [0, n) */
 int randn(int n);
 
 /* Random number from (0, n] */
