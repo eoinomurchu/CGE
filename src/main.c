@@ -37,6 +37,16 @@ int main(int argc, char **argv) {
   /* Initialise the population */
   Population *population = createPopulation(config.populationSize);
   initialise(population, config.populationSize);
+
+  /* Pipeline Loop */
+  int g;
+  for (g = 0; g < config.generations; g++) {
+    /* mapping */
+    /* evaluation */
+    /* selection */
+    /* ops */
+    /* replacement*/
+  }
   
   return 0;
 }
