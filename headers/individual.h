@@ -2,7 +2,7 @@
 #define INDIVIDUAL_H
 
 /* Genotype/Chromosome */
-typedef struct genotype {
+typedef struct {
   unsigned int *codons;
   unsigned char **mappedSymbols;
   unsigned int length;
@@ -17,5 +17,9 @@ typedef struct {
   Phenotype *phenotype;
 } Individual;  
 
-typedef Individual Population;
+typedef struct {
+  Individual **inds;
+  unsigned int size;
+} Population;
+
 #endif

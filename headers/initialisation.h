@@ -4,9 +4,9 @@
 #include "individual.h"
 
 /* Initialisation Operation Functor */
-void (*initialise)(Population *, int size);
+void (*initialise)(Population *p, int size);
 
-void randomInitialisation(Population *, int size);
+void randomInitialisation(Population *p, int size);
 
 Population *createPopulation(int size);
 

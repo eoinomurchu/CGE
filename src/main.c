@@ -2,11 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "util.h"
 #include "config.h"
-#include "individual.h"
+#include "contextfree.h"
 #include "genops.h"
+#include "grammar.h"
+#include "individual.h"
 #include "initialisation.h"
+#include "util.h"
 
 /* The parameters/config */
 Config config = {
@@ -19,7 +21,10 @@ Config config = {
   1,           /* Mutation Rate - Ops per individual */
   "onepoint",  /* Crossover Op */
   0.9f         /* Crossover Rate */
-};;
+};
+
+/* The grammar */
+Grammar *grammar;
 
 int main(int argc, char **argv) {
  
