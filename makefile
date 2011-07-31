@@ -1,9 +1,9 @@
 CC=gcc
 CFLAGS=-c -Wall -g
 LDFLAGS=
-SOURCES=src/util.c src/config.c src/initialisation.c src/genops.c src/main.c
+SOURCES=src/util.c src/config.c src/contextfree.c src/initialisation.c src/genops.c src/main.c
 INCLUDES=-Iheaders -Ilibs/includes
-LIBS=-Llibs
+LIBS=
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=cge
 BASEDIR=./
