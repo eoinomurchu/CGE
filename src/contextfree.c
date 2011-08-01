@@ -5,14 +5,29 @@
 #include "config.h"
 #include "contextfree.h"
 
-/* Displays error message and quits */
+/* 
+ * Gets a rule based on a nonterminal symbol 
+ */
+static Rule *getRule(char *ntSymbol) {
+  int i;
+  for (i = 0; i < ((CFG *)grammar)->count; i++)
+    if (strcmp(ntSymbol, ((CFG *)grammar)->rules[i]->symbol) == 0)
+        return ((CFG *)grammar)->rules[i];
+  return NULL;
+}
+
+/* 
+ * Displays error message and quits 
+ */
 static void malformedGrammar(char *string) {
   perror("Malformed Grammar Exception. The following string was malformed: ");
   perror(string);
   exit(EXIT_FAILURE);  
 }
 
-/* Creates a new empty rule in the grammar */
+/* 
+ * Creates a new empty rule in the grammar 
+ */
 static Rule *addNewRule(CFG *grammar) {
   /* Too myny rules ? */
   if (grammar->count == (grammar->maxSize-1)) {
@@ -30,7 +45,9 @@ static Rule *addNewRule(CFG *grammar) {
   return r;
 }
 
-/* Creates a new empty production in the rule */
+/* 
+ * Creates a new empty production in the rule 
+ */
 static Production *addNewProduction(Rule *r) {
   /* Too many productions? */
   if (r->count == (r->maxSize-1)) {
@@ -49,7 +66,9 @@ static Production *addNewProduction(Rule *r) {
   return p;
 }
 
-/* Adds a new symbol to the production */
+/* 
+ * Adds a new symbol to the production 
+ */
 static void addNewSymbol(Production *p, char *symbol) {
   /* Too many symbols? */
   if (p->count == (p->maxSize-1)) {
@@ -61,7 +80,9 @@ static void addNewSymbol(Production *p, char *symbol) {
   p->symbols[p->count++] = symbol;
 }
 
-/* Reads a bnf grammar from a file */
+/* 
+ * Reads a bnf cfg from a file 
+ */
 Grammar *readContextFreeGrammar() {
   Grammar *grammar = malloc(sizeof(Grammar));
   CFG *cfg = (CFG *)grammar;
@@ -164,4 +185,12 @@ Grammar *readContextFreeGrammar() {
   }    
 
   return grammar;
+}
+
+/*
+ * Maps an induvidual's genotype to its phenotype using a context-free
+ * grammar.
+ */
+void mapCFG(Individual *individual) {
+  
 }

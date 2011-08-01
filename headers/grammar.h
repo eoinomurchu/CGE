@@ -1,6 +1,8 @@
 #ifndef GRAMMAR_H
 #define GRAMMAR_H
 
+#include "individual.h"
+
 typedef struct {
   char **symbols;
   unsigned int count;
@@ -26,6 +28,9 @@ typedef union {
 
 /** Functor, Grammar returned can be either type */
 Grammar *(*readGrammar)();
+
+/** Functor, Map an individual's genotype to a phenotype */
+void (*map)(Individual *);
 
 extern Grammar *grammar;
 #endif
