@@ -1,0 +1,9 @@
+<e>:=<e><o><e>|<v>
+<o>:=+|-
+<v>:=x|y
+<t1>:=t<nt>|<nt>t
+<t2>:=<nt>t|t<nt>
+<t3>:=t<nt>t|<nt>t<nt>
+<t4>:=<nt>t<nt>|t<nt>t
+<t5>:=t<nt>t<nt>|<nt>t<nt>t|randomntsymbol
+<t6>:=<nt>t<nt>t|t<nt>t<nt>|randomtsymbols
