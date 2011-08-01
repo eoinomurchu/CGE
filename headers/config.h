@@ -4,6 +4,7 @@
 /* Holds the config/params */
 typedef struct {
   int seed;
+  char *grammarFile;
 
   unsigned int generations;
   unsigned int populationSize;

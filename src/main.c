@@ -13,6 +13,7 @@
 /* The parameters/config */
 Config config = {
   -1,          /* Seed, -1 == time(NULL) */
+  "grammars/default.bnf", /* Grammar File */
   200,         /* Generations */
   50,          /* Population Size */
   "random",    /* Initialisation */
@@ -38,6 +39,9 @@ int main(int argc, char **argv) {
   setInitialiser();
   setMutationOp();
   setCrossoverOp();
+
+  readGrammar = readContextFreeGrammar;
+  readGrammar();
 
   /* Initialise the population */
   Population *population = createPopulation(config.populationSize);
