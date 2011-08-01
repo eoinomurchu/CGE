@@ -2,14 +2,22 @@
 #define GRAMMAR_H
 
 typedef struct {
-  char *startSymbol;
-  char **productions;
-  int count;
+  char **symbols;
+  unsigned int count;
+  unsigned int maxSize; 
+} Production;
+
+typedef struct {
+  char *symbol;
+  Production **productions;
+  unsigned int count;
+  unsigned int maxSize;
 } Rule;
 
 typedef struct {
-  Rule *rules;
-  int count;
+  Rule **rules;
+  unsigned int count;
+  unsigned int maxSize;
 } CFG;
 
 typedef union {
