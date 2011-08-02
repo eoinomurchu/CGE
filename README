@@ -1,6 +1,8 @@
 Personal Project to get Grammatical Evolution implemented in C
 
 TODO:
+ o Initialisation
+  - Sensible initialisation
  o Grammar
   - Symbol Pool
   - Clean up memory allocations from dynamic array allocation
@@ -8,4 +10,7 @@ TODO:
   - CFG Mapping
  o Fitness Evaluation
  o Selection
+ o Genetic Operations
+  - Operators for intflip and onepoint
+  - Operators/Operations for two point/sensible
  o Replacement
