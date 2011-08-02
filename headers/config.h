@@ -5,17 +5,12 @@
 typedef struct {
   int seed;
   char *grammarFile;
-
+  char *operators;
   unsigned int generations;
   unsigned int populationSize;
-
   char *initialisation;
   unsigned int maxInitialSize;
-
-  char *mutation;
   unsigned int mutationRate;
-
-  char *crossover;
   float crossoverProb;
 } Config;
 
@@ -31,10 +26,7 @@ void setSeed();
 /* Set the initialisation method/functor */
 void setInitialiser();
 
-/* Set the mutation operation/functor */
-void setMutationOp();
-
-/* Set the crossover operation/functor */
-void setCrossoverOp();
+/* */
+void setPipeline();
 
 #endif

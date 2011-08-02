@@ -3,14 +3,14 @@
 
 #include "individual.h"
 
-/* Mutation Operation Functor */
-void (*mutate)(Genotype *);
+/*
+ * Operator Functor
+ */
+void intflipMutationOperator(Population *population);
 
-void intflipMutation(Genotype *);
-
-/* Crossover Operation Functor */
-void (*crossover)(Genotype *, Genotype *);
-
-void onepointCrossover(Genotype *, Genotype *);
+/*
+ * Operator Functor
+ */
+void onepointCrossoverOperator(Population *population);
 
 #endif

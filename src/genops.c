@@ -1,17 +1,31 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 #include "config.h"
 #include "genops.h"
 #include "util.h"
 
-void intflipMutation(Genotype *individual) {
+/*
+ * Operation
+ */
+static void intflipMutation(Genotype *individual) {
   int i; 
   for (i = 0; i < config.mutationRate; i++)
     individual->codons[randn(individual->length)] = rand();
 }
 
-void onepointCrossover(Genotype *parent, Genotype *spouse) {
+/*
+ * Operator Functor
+ */
+void intflipMutationOperator(Population *population) {
+
+}
+
+/*
+ * Operation
+ */
+static void onepointCrossover(Genotype *parent, Genotype *spouse) {
   /* Only crossover with a certain probability */
   if (randf() > config.crossoverProb)
     return;
@@ -43,4 +57,11 @@ void onepointCrossover(Genotype *parent, Genotype *spouse) {
   /* Update length */
   parent->length -= (parentLength - spouseLength);
   spouse->length += (parentLength - spouseLength);
+}
+
+/*
+ * Operator Functor
+ */
+void onepointCrossoverOperator(Population *population) {
+
 }
