@@ -66,7 +66,7 @@ int main(int argc, char **argv) {
     /* mapping */
     int i;
     for (i = 0; i < population->size; i++)
-      map(population->inds[i])
+      map(population->inds[i]);
 
     /* evaluation */
     /* selection */
