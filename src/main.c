@@ -9,6 +9,7 @@
 #include "individual.h"
 #include "initialisation.h"
 #include "pipeline.h"
+#include "tree.h"
 #include "util.h"
 
 /* The parameters/config */
@@ -16,10 +17,10 @@ Config config = {
   -1,          /* Seed, -1 == time(NULL) */
   "grammars/default.bnf", /* Grammar File */
   "intflip,onepoint", /* Pipeline, list of operators */
-  200,         /* Generations */
-  50,          /* Population Size */
+  1,         /* Generations */
+  5,          /* Population Size */
   "random",    /* Initialisation */
-  100,         /* Initial Max Size */
+  20,         /* Initial Max Size */
   1,           /* Mutation Rate - Ops per individual */
   0.9f         /* Crossover Rate */
 };
@@ -31,7 +32,7 @@ Grammar *grammar;
 Pipeline *pipeline;
 
 int main(int argc, char **argv) {
- 
+  
   /* Parse any options on the command line */
   getOpts(argc, argv);
 
@@ -43,18 +44,30 @@ int main(int argc, char **argv) {
   setPipeline();
 
   readGrammar = readContextFreeGrammar;
-  readGrammar();
+  grammar = readGrammar();
 
   /* Initialise the population */
   Population *population = createPopulation(config.populationSize);
   initialise(population, config.populationSize);
+
+  map = mapCFG;
+  int i;
+  for (i = 0; i < population->size; i++) {
+    if (map(population->inds[i]))
+      printf("%s\n",population->inds[i]->phenotype);
+  }
 
   /* Generation Loop */
   int g;
   for (g = 0; g < config.generations; g++) {
 
     /* Pipline loop */
+
     /* mapping */
+    int i;
+    for (i = 0; i < population->size; i++)
+      map(population->inds[i])
+
     /* evaluation */
     /* selection */
     /* ops */

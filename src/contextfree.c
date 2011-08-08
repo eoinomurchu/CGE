@@ -4,6 +4,7 @@
 
 #include "config.h"
 #include "contextfree.h"
+#include "tree.h"
 
 /* 
  * Gets a rule based on a nonterminal symbol 
@@ -188,9 +189,71 @@ Grammar *readContextFreeGrammar() {
 }
 
 /*
+ * 1 - sucess
+ * 0 - fail
+ */
+static int growNode(Individual *individual, Tree *dt, Node *currNode, int *phenotypeSize) {
+  Genotype *genotype = individual->genotype;
+  
+  /* Get the rule if the symbol is nt */
+  Rule *r = getRule(currNode->data);
+  if (!r) {
+    *(phenotypeSize) += strlen(currNode->data);
+    return 1;
+  }
+
+  /* If we have and need a codon, use it. Else use only production or fail */
+  int choice = 0;
+  if (r->count > 1) {
+    if (genotype->encodingLength < genotype->length)
+      choice = genotype->codons[genotype->encodingLength++] % r->count;
+    else
+      return 0;
+  }
+
+  int s; 
+  for (s = 0; s < r->productions[choice]->count; s++)
+    if (!growNode(individual, dt, addChildNode(dt, currNode, r->productions[choice]->symbols[s]), phenotypeSize))
+      return 0;
+
+  return 1;
+}
+
+/*
+ *
+ */
+static int gatherPhenotype(Node *node, Phenotype *phenotype, int offset) {
+  if (node->count == 0) {
+    int size = strlen((char *)node->data)*sizeof(char);
+    memcpy(phenotype+offset, node->data, size);
+    return offset+size;
+  }
+  int c; 
+  for (c = 0; c < node->count; c++) 
+    offset = gatherPhenotype(node->children[c], phenotype, offset);
+  return offset;
+}
+
+/*
  * Maps an induvidual's genotype to its phenotype using a context-free
  * grammar.
+ * 1 - sucess
+ * 0 - fail
  */
-void mapCFG(Individual *individual) {
+int mapCFG(Individual *individual) {
+  CFG *cfg = ((CFG*) grammar);
+  Tree *dt = newTree(cfg->rules[0]->symbol);
+  Node *currNode = dt->root;
   
+  individual->derivationTree = dt;
+
+  int phenotypeSize = 1;
+  if (growNode(individual, dt, currNode, &phenotypeSize)) {
+    individual->phenotype = malloc(phenotypeSize*sizeof(char));
+    gatherPhenotype(dt->root, individual->phenotype, 0);
+    individual->phenotype[phenotypeSize-1] = '\0';
+    return 1;
+  }
+  else
+    return 0;
 }

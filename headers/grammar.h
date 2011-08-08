@@ -30,7 +30,7 @@ typedef union {
 Grammar *(*readGrammar)();
 
 /** Functor, Map an individual's genotype to a phenotype */
-void (*map)(Individual *);
+int (*map)(Individual *);
 
 extern Grammar *grammar;
 #endif
