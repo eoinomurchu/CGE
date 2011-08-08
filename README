@@ -7,10 +7,10 @@ TODO:
   - Symbol Pool
   - Clean up memory allocations from dynamic array allocation
  o Mapping
-  - CFG Mapping
+  - Mapped symbol codon index 
  o Fitness Evaluation
  o Selection
  o Genetic Operations
   - Operators for intflip and onepoint
-  - Operators/Operations for two point/sensible
+  - Operators/Operations for two point/sensible xo
  o Replacement
