@@ -28,6 +28,8 @@ Population *createPopulation(int size) {
     pop->inds[i] = (Individual *) malloc(sizeof(Individual));
     pop->inds[i]->genotype = genotypes[i];
   }
+
+  free(genotypes);
   return pop;
 }
 

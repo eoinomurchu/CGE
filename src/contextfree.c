@@ -247,6 +247,7 @@ int mapCFG(Individual *individual) {
   
   individual->derivationTree = dt;
 
+  individual->genotype->encodingLength = 0;
   int phenotypeSize = 1;
   if (growNode(individual, dt, currNode, &phenotypeSize)) {
     individual->phenotype = malloc(phenotypeSize*sizeof(char));

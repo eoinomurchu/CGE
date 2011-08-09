@@ -51,11 +51,6 @@ int main(int argc, char **argv) {
   initialise(population, config.populationSize);
 
   map = mapCFG;
-  int i;
-  for (i = 0; i < population->size; i++) {
-    if (map(population->inds[i]))
-      printf("%s\n",population->inds[i]->phenotype);
-  }
 
   /* Generation Loop */
   int g;
@@ -65,16 +60,20 @@ int main(int argc, char **argv) {
 
     /* mapping */
     int i;
-    for (i = 0; i < population->size; i++)
-      map(population->inds[i]);
+    for (i = 0; i < population->size; i++) {
+      population->inds[i]->valid = map(population->inds[i]);
+      if (population->inds[i]->valid)
+        printf("%d: %s\n", i, population->inds[i]->phenotype);
+    }
 
     /* evaluation */
     /* selection */
     /* ops */
-    /* replacement*/
     int o;
     for (o = 0; o < pipeline->count; o++)
       pipeline->ops[o](population);
+
+    /* replacement*/
   }
   
   return 0;
