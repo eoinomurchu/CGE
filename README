@@ -10,6 +10,8 @@ TODO:
   - Mapped symbol codon index 
  o Fitness Evaluation
  o Selection
+  - Tournament Selection
+  - Initalise memory once, just copy.
  o Genetic Operations
   - Operators for intflip and onepoint
   - Operators/Operations for two point/sensible xo
