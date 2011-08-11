@@ -1,16 +1,16 @@
 #ifndef GENOPS_H
 #define GENOPS_H
 
-#include "individual.h"
+#include "population.h"
+
+/*
+ * 
+ */
+void intflipMutationOperator();
 
 /*
  * Operator Functor
  */
-void intflipMutationOperator(Population *population);
-
-/*
- * Operator Functor
- */
-void onepointCrossoverOperator(Population *population);
+void onepointCrossoverOperator();
 
 #endif

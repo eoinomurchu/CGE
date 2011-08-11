@@ -7,19 +7,13 @@
 #include "util.h"
 
 /*
- * Operation
+ * Operator/Operation function
  */
-static void intflipMutation(Genotype *individual) {
-  int i; 
-  for (i = 0; i < config.mutationRate; i++)
-    individual->codons[randn(individual->length)] = rand();
-}
-
-/*
- * Operator Functor
- */
-void intflipMutationOperator(Population *population) {
-
+void intflipMutationOperator() {
+  int i, m;
+  for (i = 0; i < selectedPopulation->size; i++)
+    for (m = 0; m < config.mutationRate; m++)
+      selectedPopulation->inds[i]->genotype->codons[randn(selectedPopulation->inds[i]->genotype->length)] = rand();
 }
 
 /*
@@ -62,6 +56,16 @@ static void onepointCrossover(Genotype *parent, Genotype *spouse) {
 /*
  * Operator Functor
  */
-void onepointCrossoverOperator(Population *population) {
+void onepointCrossoverOperator() {
+  if (selectedPopulation->size < 2)
+    return;
 
+  int i;
+  for (i = 0; i < selectedPopulation->size - 1; i += 2)
+    if (randf() < config.crossoverProb)  
+      onepointCrossover(selectedPopulation->inds[i]->genotype, selectedPopulation->inds[i+1]->genotype);
+
+  if (selectedPopulation->size % 2 == 1)
+    if (randf() < config.crossoverProb)
+      onepointCrossover(selectedPopulation->inds[i]->genotype, selectedPopulation->inds[randnSafe(i)]->genotype);
 }

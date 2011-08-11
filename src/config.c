@@ -7,6 +7,7 @@
 #include "config.h"
 #include "genops.h"
 #include "initialisation.h"
+#include "tournamentselection.h"
 #include "pipeline.h"
 
 /* 
@@ -15,8 +16,8 @@
 void getOpts(int argc, char **argv) {
   int c;
   while ((c = getopt (argc, argv, "S:G:P:I:i:M:m:C:c:")) != -1) {
-    printf("Option: %c\n", optopt); 
-    printf("Option pointer: %s\n", optarg); 
+    /* printf("Option: %c\n", optopt); 
+       printf("Option pointer: %s\n", optarg); */
     switch (c) {
       case 'S': 
         config.seed = atoi(optarg);
@@ -74,8 +75,9 @@ void setInitialiser() {
  * pipeline.
  */
 void setPipeline() {;
-  char *intflip = "intflip";
+  char *tournament = "tournament";
   char *onepoint = "onepoint";
+  char *intflip = "intflip";
 
   pipeline = malloc(sizeof(Pipeline));
   pipeline->count = 0;
@@ -97,6 +99,8 @@ void setPipeline() {;
       pipeline->ops[pipeline->count++] = intflipMutationOperator;
     else if (strncmp(previous, onepoint, strlen(onepoint)) == 0)
       pipeline->ops[pipeline->count++] = onepointCrossoverOperator;
+    else if (strncmp(previous, tournament, strlen(onepoint)) == 0)
+      pipeline->ops[pipeline->count++] = tournamentSelectionOperator;
 
     previous = c + 1;
   }

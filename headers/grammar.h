@@ -1,7 +1,7 @@
 #ifndef GRAMMAR_H
 #define GRAMMAR_H
 
-#include "individual.h"
+#include "population.h"
 
 typedef struct {
   char **symbols;

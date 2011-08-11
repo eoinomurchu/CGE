@@ -1,7 +1,7 @@
 #ifndef INITIALISATION_H
 #define INITIALISATION_H
 
-#include "individual.h"
+#include "population.h"
 
 /* Initialisation Operation Functor */
 void (*initialise)(Population *p, int size);

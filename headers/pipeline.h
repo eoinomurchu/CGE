@@ -1,10 +1,10 @@
 #ifndef PIPELINE_H
 #define PIPELINE_H
 
-#include "individual.h"
+#include "population.h"
 
 typedef struct {
-  void (**ops)(Population *);
+  void (**ops)();
   unsigned int count;
 } Pipeline;
 

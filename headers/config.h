@@ -10,6 +10,7 @@ typedef struct {
   unsigned int populationSize;
   char *initialisation;
   unsigned int maxInitialSize;
+  unsigned int tournamentSize;
   unsigned int mutationRate;
   float crossoverProb;
 } Config;

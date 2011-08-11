@@ -1,6 +1,8 @@
 Personal Project to get Grammatical Evolution implemented in C
 
 TODO:
+ o Pipeline
+  - Tie mapping, eval and replacement into pipeline
  o Initialisation
   - Sensible initialisation
  o Grammar
@@ -9,10 +11,9 @@ TODO:
  o Mapping
   - Mapped symbol codon index 
  o Fitness Evaluation
+  - Everything
  o Selection
-  - Tournament Selection
-  - Initalise memory once, just copy.
  o Genetic Operations
-  - Operators for intflip and onepoint
   - Operators/Operations for two point/sensible xo
  o Replacement
+  - Everything
