@@ -183,7 +183,9 @@ Grammar *readContextFreeGrammar() {
       /* Move past the end of this production */
       previous = end+1;
     }
-  }    
+  }
+  
+  fclose(file);
 
   return grammar;
 }
