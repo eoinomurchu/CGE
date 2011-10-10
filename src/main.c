@@ -83,11 +83,14 @@ int main(int argc, char **argv) {
     /* mapping and evaluation */
     int i;
     for (i = 0; i < population->size; i++) {
-      population->inds[i]->valid = map(population->inds[i]);             
+      population->inds[i]->valid = map(population->inds[i]);
+
       /* evaluation */
+      /* TODO */
     }
 
     /* replacement*/
+    /* TODO */
   }
   
   return 0;
