@@ -1,7 +1,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-/* Holds the config/params */
+/* Struct for holding the config/params */
 typedef struct {
   int seed;
   char *grammarFile;

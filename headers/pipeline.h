@@ -3,6 +3,7 @@
 
 #include "population.h"
 
+/* Struct for the pipeline, array of op functors */
 typedef struct {
   void (**ops)();
   unsigned int count;

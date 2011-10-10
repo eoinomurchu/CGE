@@ -4,12 +4,12 @@
 #include "population.h"
 
 /*
- * 
+ * Operator Functor - Integer Flip Mutation
  */
 void intflipMutationOperator();
 
 /*
- * Operator Functor
+ * Operator Functor - One Point Crossover
  */
 void onepointCrossoverOperator();
 
