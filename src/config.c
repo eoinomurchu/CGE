@@ -64,7 +64,7 @@ void setSeed() {
  * Set the initialisation method/functor 
  */
 void setInitialiser() {
-  if (strcmp(config.initialisation, op_random) == 0)
+  if (strncmp(config.initialisation, op_random, strlen(op_random)) == 0)
     initialise = randomInitialisation;
 }
 
@@ -87,6 +87,12 @@ void setPipeline() {;
 
   /* Parse the opertors (comma seperated) */
   char *previous = config.operators;
+
+  /* Grab the initialiser */
+  c = strchr(previous, ',');
+  config.initialisation = previous;
+  setInitialiser();
+
   while (previous != NULL+1) {
     c = strchr(previous, ',');
 

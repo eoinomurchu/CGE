@@ -16,10 +16,10 @@
 Config config = {
   -1,          /* Seed, -1 == time(NULL) */
   "grammars/default.bnf", /* Grammar File */
-  "tournament,onepoint,intflip", /* Pipeline, list of operators */
+  "random,tournament,onepoint,intflip", /* Pipeline, list of operators */
   1,         /* Generations */
   4,          /* Population Size */
-  "random",    /* Initialisation */
+  "",    /* Initialisation */
   20,         /* Initial Max Size */
   1,          /* Tournament Size*/
   0,           /* Mutation Rate - Ops per individual */
@@ -50,7 +50,6 @@ int main(int argc, char **argv) {
   setSeed();
 
   /* Set operator functors */
-  setInitialiser();
   setPipeline();
 
   readGrammar = readContextFreeGrammar;
