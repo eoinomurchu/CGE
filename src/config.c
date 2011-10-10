@@ -7,6 +7,7 @@
 #include "config.h"
 #include "genops.h"
 #include "initialisation.h"
+#include "operatorlist.h"
 #include "tournamentselection.h"
 #include "pipeline.h"
 
@@ -63,9 +64,7 @@ void setSeed() {
  * Set the initialisation method/functor 
  */
 void setInitialiser() {
-  char *random = "random";
-  
-  if (strcmp(config.initialisation, random) == 0)
+  if (strcmp(config.initialisation, op_random) == 0)
     initialise = randomInitialisation;
 }
 
@@ -75,10 +74,6 @@ void setInitialiser() {
  * pipeline.
  */
 void setPipeline() {;
-  char *tournament = "tournament";
-  char *onepoint = "onepoint";
-  char *intflip = "intflip";
-
   pipeline = malloc(sizeof(Pipeline));
   pipeline->count = 0;
 
@@ -95,11 +90,11 @@ void setPipeline() {;
   while (previous != NULL+1) {
     c = strchr(previous, ',');
 
-    if (strncmp(previous, intflip, strlen(intflip)) == 0)
+    if (strncmp(previous, op_intflip, strlen(op_intflip)) == 0)
       pipeline->ops[pipeline->count++] = intflipMutationOperator;
-    else if (strncmp(previous, onepoint, strlen(onepoint)) == 0)
+    else if (strncmp(previous, op_onepoint, strlen(op_onepoint)) == 0)
       pipeline->ops[pipeline->count++] = onepointCrossoverOperator;
-    else if (strncmp(previous, tournament, strlen(onepoint)) == 0)
+    else if (strncmp(previous, op_tournament, strlen(op_onepoint)) == 0)
       pipeline->ops[pipeline->count++] = tournamentSelectionOperator;
 
     previous = c + 1;
