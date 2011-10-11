@@ -4,17 +4,10 @@
 #include "initialisation.h"
 #include "util.h"
 
-Genotype **createGenotypes(int size) {
-  Genotype *genotypes = (Genotype *) malloc(size*sizeof(Genotype));
-  Genotype **population = (Genotype **) malloc(size*sizeof(Genotype*));
-  
-  int i;
-  for (i = 0; i < size; i++) {
-    (genotypes+i)->codons = (unsigned int*) malloc(config.maxInitialSize*sizeof(unsigned int));
-    population[i] = (genotypes+i);
-  }
-  
-  return population;
+Genotype *createGenotype() {
+  Genotype *genotype = (Genotype *) malloc(sizeof(Genotype));
+  genotype->codons = (unsigned int*) malloc(config.maxInitialSize*sizeof(unsigned int));
+  return genotype;
 }
 
 Population *createPopulation(int size) {
@@ -22,14 +15,12 @@ Population *createPopulation(int size) {
   pop->inds = malloc(size*sizeof(Individual*));
   pop->size = size;
   
-  Genotype **genotypes = createGenotypes(size);
   int i;
   for (i = 0; i < size; i++) {
     pop->inds[i] = (Individual *) malloc(sizeof(Individual));
-    pop->inds[i]->genotype = genotypes[i];
+    pop->inds[i]->genotype = createGenotype();
   }
 
-  free(genotypes);
   return pop;
 }
 

@@ -13,6 +13,7 @@ typedef struct {
   unsigned int tournamentSize;
   unsigned int mutationRate;
   float crossoverProb;
+  char *fitnessfunction;
 } Config;
 
 /* Program wide parameters */
@@ -27,7 +28,11 @@ void setSeed();
 /* Set the initialisation method/functor */
 void setInitialiser();
 
-/* */
+/* Set the fitness function */
+void setFitnessFunction();
+
+/* Read the pipeline string and file the pipeline with the correct
+   functors */
 void setPipeline();
 
 #endif

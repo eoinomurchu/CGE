@@ -4,6 +4,7 @@
 
 #include "config.h"
 #include "contextfree.h"
+#include "fitnessfunction.h"
 #include "genops.h"
 #include "grammar.h"
 #include "initialisation.h"
@@ -18,12 +19,13 @@ Config config = {
   "grammars/default.bnf", /* Grammar File */
   "random,tournament,onepoint,intflip", /* Pipeline, list of operators */
   1,         /* Generations */
-  4,          /* Population Size */
+  2,          /* Population Size */
   "",    /* Initialisation */
   20,         /* Initial Max Size */
   1,          /* Tournament Size*/
   0,           /* Mutation Rate - Ops per individual */
-  1.0f         /* Crossover Rate */
+  1.0f,         /* Crossover Rate */
+  "sextic"
 };
 
 /* The grammar */
@@ -39,7 +41,7 @@ Population *selectedPopulation;
 Pipeline *pipeline;
 
 /*
- *
+ * Entry point
  */
 int main(int argc, char **argv) {
   
@@ -52,6 +54,9 @@ int main(int argc, char **argv) {
   /* Set operator functors */
   setPipeline();
 
+  /* Set the fitness function */
+  setFitnessFunction();
+
   readGrammar = readContextFreeGrammar;
   grammar = readGrammar();
 
@@ -59,9 +64,10 @@ int main(int argc, char **argv) {
   population = createPopulation(config.populationSize);
   initialise(population, config.populationSize);
 
+  /* Only one mapper so far */
   map = mapCFG;
 
-  /* initial mapping and evalution */
+  /* Initial mapping and evalution */
   int i;
   for (i = 0; i < population->size; i++) {
     population->inds[i]->valid = map(population->inds[i]);
@@ -78,15 +84,14 @@ int main(int argc, char **argv) {
     for (o = 0; o < pipeline->count; o++)
       pipeline->ops[o]();
 
+    clearPopulation(population);
     population = selectedPopulation;
 
     /* mapping and evaluation */
     int i;
     for (i = 0; i < population->size; i++) {
       population->inds[i]->valid = map(population->inds[i]);
-
-      /* evaluation */
-      /* TODO */
+      evaluate(population->inds[i]);
     }
 
     /* replacement*/

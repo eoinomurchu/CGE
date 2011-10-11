@@ -33,6 +33,9 @@ extern Population *selectedPopulation;
 
 Individual *copyIndividual(Individual *);
 
-Population *copyPopulation(Population*);
+Population *copyPopulation(Population *);
 
+void clearPopulation(Population *);
+
+void printPopulation(Population *);
 #endif

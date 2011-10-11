@@ -48,3 +48,22 @@ Population *copyPopulation(Population* population) {
 
   return newPopulation;
 }
+
+void clearPopulation(Population *population) {
+  int i;
+  for (i = 0; i < population->size; i++) {
+    free(population->inds[i]->genotype);
+    free(population->inds[i]);
+  }  
+}
+
+void printPopulation(Population *population) {
+  int i;
+  for (i = 0; i < population->size; i++) {
+    int c;
+    printf("%d:\t", i);
+    for (c = 0; c < population->inds[i]->genotype->length; c++)
+      printf("%d ", population->inds[i]->genotype->codons[c]);
+    printf("\n");
+  }
+}

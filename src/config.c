@@ -5,9 +5,10 @@
 #include <unistd.h>
 
 #include "config.h"
+#include "configstrings.h"
+#include "fitnessfunction.h"
 #include "genops.h"
 #include "initialisation.h"
-#include "operatorlist.h"
 #include "tournamentselection.h"
 #include "pipeline.h"
 
@@ -66,6 +67,14 @@ void setSeed() {
 void setInitialiser() {
   if (strncmp(config.initialisation, op_random, strlen(op_random)) == 0)
     initialise = randomInitialisation;
+}
+
+/*
+ * Set the fitness function
+ */
+void setFitnessFunction() {
+  if (strncmp(config.fitnessfunction, ff_sextic, strlen(ff_sextic)) == 0)
+    ;//evaluate = sexticFitnessFunction;
 }
 
 /* 
