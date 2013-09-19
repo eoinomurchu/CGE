@@ -59,3 +59,24 @@ static void printSubTree(const Node *root) {
 void printTree(const Tree *tree) {
   printSubTree(tree->root);
 }
+
+/*
+ *
+ */
+static void clearNodes(Node *node) {
+  int n;
+  for (n = 0; n < node->count; n++)
+    clearNodes(node->children[n]);
+  free(node->children);
+  free(node);
+}
+
+/*
+ *
+ */
+void clearTree(Tree *tree) {
+  clearNodes(tree->root);
+  free(tree);
+}
+
+

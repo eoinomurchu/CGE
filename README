@@ -1,6 +1,15 @@
 Work-in-progress: Personal Project to get Grammatical Evolution implemented in C
 
 TODO:
+ o Memory
+  - Fix reachable memory leaks, i.e., grammar
+  - Add checks to reallocs in case of failure
+ o Pipeline
+  - Add init and destroy methods to ops and add loops to main
+ o Copy phenotype and derivationTree
+ o Elites
+
+OLD_TODO:
  o Pipeline
   - Tie mapping, eval and replacement into pipeline
  o Initialisation
@@ -10,10 +19,8 @@ TODO:
   - Clean up memory allocations from dynamic array allocation
  o Mapping
   - Mapped symbol codon index 
- o Fitness Evaluation
-  - Everything
- o Selection
  o Genetic Operations
   - Operators/Operations for two point/sensible xo
  o Replacement
   - Everything
+  - Elites

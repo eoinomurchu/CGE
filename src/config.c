@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -12,19 +13,19 @@
 #include "tournamentselection.h"
 #include "pipeline.h"
 
-/* 
+/*
  * Get the parameters from the command line
  */
 void getOpts(int argc, char **argv) {
   int c;
-  while ((c = getopt (argc, argv, "S:G:P:I:i:M:m:C:c:")) != -1) {
-    /* printf("Option: %c\n", optopt); 
+  while ((c = getopt (argc, argv, "dS:G:P:I:i:M:m:C:c:")) != -1) {
+    /* printf("Option: %c\n", optopt);
        printf("Option pointer: %s\n", optarg); */
     switch (c) {
-      case 'S': 
+      case 'S':
         config.seed = atoi(optarg);
         break;
-      case 'G': 
+      case 'G':
         config.generations = atoi(optarg);
         break;
       case 'P':
@@ -45,13 +46,16 @@ void getOpts(int argc, char **argv) {
       case 'O':
         config.operators = optarg;
         break;
+      case 'd':
+	config.debug = true;
+	break;
       default:
-        printf("unknown option: '%c'\n", optopt); 
+        printf("unknown option: '%c'\n", optopt);
     }
   }
 }
 
-/* 
+/*
  * Set the seed for rand
  */
 void setSeed() {
@@ -62,7 +66,7 @@ void setSeed() {
 }
 
 /*
- * Set the initialisation method/functor 
+ * Set the initialisation method/functor
  */
 void setInitialiser() {
   if (strncmp(config.initialisation, op_random, strlen(op_random)) == 0)
@@ -74,35 +78,38 @@ void setInitialiser() {
  */
 void setFitnessFunction() {
   if (strncmp(config.fitnessfunction, ff_sextic, strlen(ff_sextic)) == 0)
-    ;//evaluate = sexticFitnessFunction;
+    evaluate = sexticFitnessFunction;
 }
 
-/* 
+/*
  * Sets all of the operators in the pipeline by parsing the comma
  * seperated list and inserting the respective functors in to the
  * pipeline.
  */
-void setPipeline() {;
+void setPipeline() {
+  int numberOfOperators;
+  char *c, *previous;
+
   pipeline = malloc(sizeof(Pipeline));
   pipeline->count = 0;
 
-  int numberOfOperators = 1;
-  char *c = config.operators;
+  numberOfOperators = 1;
+  c = config.operators;
   while (*c != '\0')
     if (*(c++) == ',')
       numberOfOperators++;
-  
+
   pipeline->ops = malloc(numberOfOperators*sizeof(void (*)(Individual *)));
 
   /* Parse the opertors (comma seperated) */
-  char *previous = config.operators;
+  previous = config.operators;
 
   /* Grab the initialiser */
   c = strchr(previous, ',');
   config.initialisation = previous;
   setInitialiser();
 
-  while (previous != NULL+1) {
+  while (previous != (char *)NULL+1) {
     c = strchr(previous, ',');
 
     if (strncmp(previous, op_intflip, strlen(op_intflip)) == 0)

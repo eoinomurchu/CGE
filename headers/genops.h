@@ -6,11 +6,11 @@
 /*
  * Operator Functor - Integer Flip Mutation
  */
-void intflipMutationOperator();
+Population *intflipMutationOperator(Population *, Population *);
 
 /*
  * Operator Functor - One Point Crossover
  */
-void onepointCrossoverOperator();
+Population *onepointCrossoverOperator(Population *, Population *);
 
 #endif

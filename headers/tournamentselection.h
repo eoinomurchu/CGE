@@ -1,6 +1,6 @@
 #ifndef TOURNAMENTSELECTION_H
 #define TOURNAMENTSELECTION_H
 
-void tournamentSelectionOperator();
+Population *tournamentSelectionOperator(Population *, Population *);
 
 #endif

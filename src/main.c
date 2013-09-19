@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -18,14 +19,15 @@ Config config = {
   -1,          /* Seed, -1 == time(NULL) */
   "grammars/default.bnf", /* Grammar File */
   "random,tournament,onepoint,intflip", /* Pipeline, list of operators */
-  1,         /* Generations */
-  2,          /* Population Size */
+  50,         /* Generations */
+  100,          /* Population Size */
   "",    /* Initialisation */
-  20,         /* Initial Max Size */
-  1,          /* Tournament Size*/
-  0,           /* Mutation Rate - Ops per individual */
-  1.0f,         /* Crossover Rate */
-  "sextic"
+  100,         /* Initial Max Size */
+  2,          /* Tournament Size*/
+  10,           /* Mutation Rate - Ops per individual */
+  0.7,         /* Crossover Rate */
+  "sextic", /* Problem */
+  false /* Debug? */
 };
 
 /* The grammar */
@@ -44,7 +46,9 @@ Pipeline *pipeline;
  * Entry point
  */
 int main(int argc, char **argv) {
-  
+  Individual *best;
+  unsigned int i,g, o;
+
   /* Parse any options on the command line */
   getOpts(argc, argv);
 
@@ -57,6 +61,9 @@ int main(int argc, char **argv) {
   /* Set the fitness function */
   setFitnessFunction();
 
+  /* Only one mapper so far */
+  map = mapCFG;
+
   readGrammar = readContextFreeGrammar;
   grammar = readGrammar();
 
@@ -64,39 +71,45 @@ int main(int argc, char **argv) {
   population = createPopulation(config.populationSize);
   initialise(population, config.populationSize);
 
-  /* Only one mapper so far */
-  map = mapCFG;
-
   /* Initial mapping and evalution */
-  int i;
   for (i = 0; i < population->size; i++) {
     population->inds[i]->valid = map(population->inds[i]);
-    /* evaluation here */
+    if (population->inds[i]->valid)
+      evaluate(population->inds[i]);
+    else
+      population->inds[i]->fitness = DEFAULT_FITNESS;
   }
 
   /* Generation Loop */
-  int g;
-  for (g = 0; g < config.generations; g++) {
+  for (g = 0; g < config.generations+1; g++) {
+
+    best = findBestIndiviual(population);
+    printf("%6d: %10.5f %s\n", g, best->fitness, best->phenotype);
+    best = NULL;
 
     /* Pipline loop */
     /* selection, genetic ops */
-    int o;
     for (o = 0; o < pipeline->count; o++)
-      pipeline->ops[o]();
+      selectedPopulation = pipeline->ops[o](population, selectedPopulation);
+
+    /* mapping and evaluation */
+    for (i = 0; i < selectedPopulation->size; i++) {
+      selectedPopulation->inds[i]->valid = map(selectedPopulation->inds[i]);
+      if (selectedPopulation->inds[i]->valid)
+	evaluate(selectedPopulation->inds[i]);
+      else
+	selectedPopulation->inds[i]->fitness = DEFAULT_FITNESS;
+    }
 
     clearPopulation(population);
     population = selectedPopulation;
-
-    /* mapping and evaluation */
-    int i;
-    for (i = 0; i < population->size; i++) {
-      population->inds[i]->valid = map(population->inds[i]);
-      evaluate(population->inds[i]);
-    }
+    selectedPopulation = NULL;
 
     /* replacement*/
     /* TODO */
   }
-  
+
+  clearPopulation(population);
+
   return 0;
 }

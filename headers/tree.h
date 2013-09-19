@@ -31,6 +31,11 @@ Tree *newTree(void *data);
 /*
  *
  */
+void clearTree(Tree *tree);
+
+/*
+ *
+ */
 void printTree(const Tree *tree);
 
 #endif

@@ -11,14 +11,17 @@ Genotype *createGenotype() {
 }
 
 Population *createPopulation(int size) {
+  int i;
+
   Population *pop = malloc(sizeof(Population));
   pop->inds = malloc(size*sizeof(Individual*));
   pop->size = size;
   
-  int i;
   for (i = 0; i < size; i++) {
     pop->inds[i] = (Individual *) malloc(sizeof(Individual));
     pop->inds[i]->genotype = createGenotype();
+    pop->inds[i]->phenotype = NULL;
+    pop->inds[i]->derivationTree = NULL;
   }
 
   return pop;
@@ -32,5 +35,7 @@ void randomInitialisation(Population *population, int size) {
     for (j = 0; j < limit; j++)
       population->inds[i]->genotype->codons[j] = rand();
     population->inds[i]->genotype->length = limit;
+    population->inds[i]->phenotype = NULL;
+    population->inds[i]->derivationTree = NULL;
   }
 }

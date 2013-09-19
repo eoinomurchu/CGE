@@ -13,4 +13,7 @@ int randnSafe(int n);
 /* Random float from [0.0, 1.0] */
 float randf();
 
+/* Random double from [0.0, 1.0] */
+double randd();
+
 #endif

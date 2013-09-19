@@ -9,27 +9,32 @@
 /*
  * Operator/Operation function
  */
-void intflipMutationOperator() {
+Population *intflipMutationOperator(Population *population, Population *selectedPopulation) {
   int i, m;
   for (i = 0; i < selectedPopulation->size; i++)
     for (m = 0; m < config.mutationRate; m++)
       selectedPopulation->inds[i]->genotype->codons[randn(selectedPopulation->inds[i]->genotype->length)] = rand();
+
+  return selectedPopulation;
 }
 
 /*
  * Operation
  */
 static void onepointCrossover(Genotype *parent, Genotype *spouse) {
+  int parentPoint, spousePoint, parentLength, spouseLength;
+  unsigned int *crossoverBuffer;
+
   /* Only crossover with a certain probability */
   if (randf() > config.crossoverProb)
     return;
 
   /* Get xo points - TODO get points from inside encoding region */
-  int parentPoint = randn(parent->length);
-  int spousePoint = randn(spouse->length);
+  parentPoint = randn(parent->length);
+  spousePoint = randn(spouse->length);
 
-  int parentLength = parent->length - parentPoint;
-  int spouseLength = spouse->length - spousePoint;
+  parentLength = parent->length - parentPoint;
+  spouseLength = spouse->length - spousePoint;
 
   /* Increase chromosome capacity if required */
   if (parentPoint +  spouseLength > parent->maxLength) {
@@ -42,11 +47,11 @@ static void onepointCrossover(Genotype *parent, Genotype *spouse) {
   }
 
   /* Perfrom crossover using temp buffer */
-  unsigned int *temp = malloc(parentLength*sizeof(unsigned int));
-  memcpy(temp, (parent->codons + parentPoint), parentLength*sizeof(unsigned int));
+  crossoverBuffer = malloc(parentLength*sizeof(unsigned int));
+  memcpy(crossoverBuffer, (parent->codons + parentPoint), parentLength*sizeof(unsigned int));
   memcpy((parent->codons + parentPoint), (spouse->codons + spousePoint), spouseLength*sizeof(unsigned int));
-  memcpy((spouse->codons + spousePoint), temp, parentLength*sizeof(unsigned int));
-  free(temp);
+  memcpy((spouse->codons + spousePoint), crossoverBuffer, parentLength*sizeof(unsigned int));
+  free(crossoverBuffer);
 
   /* Update length */
   parent->length -= (parentLength - spouseLength);
@@ -56,16 +61,18 @@ static void onepointCrossover(Genotype *parent, Genotype *spouse) {
 /*
  * Operator Functor
  */
-void onepointCrossoverOperator() {
-  if (selectedPopulation->size < 2)
-    return;
-
+Population *onepointCrossoverOperator(Population *population, Population *selectedPopulation) {
   int i;
-  for (i = 0; i < selectedPopulation->size - 1; i += 2)
-    if (randf() < config.crossoverProb)  
-      onepointCrossover(selectedPopulation->inds[i]->genotype, selectedPopulation->inds[i+1]->genotype);
 
-  if (selectedPopulation->size % 2 == 1)
-    if (randf() < config.crossoverProb)
-      onepointCrossover(selectedPopulation->inds[i]->genotype, selectedPopulation->inds[randnSafe(i)]->genotype);
+  /* We can't crossover without at least two individuals */
+  if (selectedPopulation->size > 1) {
+    for (i = 0; i < selectedPopulation->size - 1; i += 2)
+      if (randf() < config.crossoverProb)  
+	onepointCrossover(selectedPopulation->inds[i]->genotype, selectedPopulation->inds[i+1]->genotype);
+
+    if (selectedPopulation->size % 2 == 1)
+      if (randf() < config.crossoverProb)
+	onepointCrossover(selectedPopulation->inds[i]->genotype, selectedPopulation->inds[randnSafe(i)]->genotype);
+  }
+  return selectedPopulation;
 }

@@ -1,15 +1,16 @@
 CC=gcc
-CFLAGS=-c -Wall -g -pg
+CFLAGS=-c -Wall -pedantic -g -pg
 LDFLAGS=-pg
-SOURCES=src/tournamentselection.c src/util.c src/config.c src/tree.c src/contextfree.c src/initialisation.c src/genops.c src/population.c src/main.c
+SOURCES = $(wildcard src/*.c) $(wildcard src/*/*.c)
+HEADERS = $(wildcard headers/*.h)
 INCLUDES=-Iheaders -Ilibs/includes
-LIBS=
+LIBS=-lm
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=cge
 
-all: $(SOURCES) $(EXECUTABLE)
+all: $(SOURCES) $(HEADERS) $(EXECUTABLE)
 
-$(EXECUTABLE): $(OBJECTS) 
+$(EXECUTABLE): $(OBJECTS)
 	$(CC) $(LDFLAGS) $(LIBS) $(OBJECTS) -o $@
 
 .c.o:

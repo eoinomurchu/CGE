@@ -12,8 +12,9 @@ typedef struct {
   unsigned int maxInitialSize;
   unsigned int tournamentSize;
   unsigned int mutationRate;
-  float crossoverProb;
+  double crossoverProb;
   char *fitnessfunction;
+  _Bool debug;
 } Config;
 
 /* Program wide parameters */
