@@ -11,7 +11,7 @@ EXECUTABLE=cge
 all: $(SOURCES) $(HEADERS) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(LDFLAGS) $(LIBS) $(OBJECTS) -o $@
+	$(CC) $(LDFLAGS) $(OBJECTS) $(LIBS) -o $@
 
 .c.o:
 	$(CC) $(INCLUDES) $(CFLAGS) $< -o $@
