@@ -104,11 +104,6 @@ void setPipeline() {
   /* Parse the opertors (comma seperated) */
   previous = config.operators;
 
-  /* Grab the initialiser */
-  c = strchr(previous, ',');
-  config.initialisation = previous;
-  setInitialiser();
-
   while (previous != (char *)NULL+1) {
     c = strchr(previous, ',');
 

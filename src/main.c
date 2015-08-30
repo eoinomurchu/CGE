@@ -18,10 +18,10 @@
 Config config = {
   -1,          /* Seed, -1 == time(NULL) */
   "grammars/default.bnf", /* Grammar File */
-  "random,tournament,onepoint,intflip", /* Pipeline, list of operators */
+  "tournament,onepoint,intflip", /* Pipeline, list of operators */
   50,         /* Generations */
   100,          /* Population Size */
-  "",    /* Initialisation */
+  "random",    /* Initialisation */
   100,         /* Initial Max Size */
   2,          /* Tournament Size*/
   10,           /* Mutation Rate - Ops per individual */
@@ -55,6 +55,9 @@ int main(int argc, char **argv) {
   /* Set rand seed */
   setSeed();
 
+  /* Set initialisation */
+  setInitialiser();
+
   /* Set operator functors */
   setPipeline();
 
@@ -71,7 +74,7 @@ int main(int argc, char **argv) {
   population = createPopulation(config.populationSize);
   initialise(population, config.populationSize);
 
-  /* Initial mapping and evalution */
+  /* Initial mapping and evaluation */
   for (i = 0; i < population->size; i++) {
     population->inds[i]->valid = map(population->inds[i]);
     if (population->inds[i]->valid)
