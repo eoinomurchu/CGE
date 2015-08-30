@@ -6,9 +6,7 @@
 #include "util.h"
 
 static void malformedCode(const char *string) {
-  fprintf(stderr, "Malformed Phenotype. The following code was malformed and could not be evalutated: ");
-  fprintf(stderr,string);
-  fprintf(stderr,"\n");
+  fprintf(stderr, "Malformed Phenotype. The following code was malformed and could not be evalutated: %s\n", string);
   exit(EXIT_FAILURE);
 }
 
