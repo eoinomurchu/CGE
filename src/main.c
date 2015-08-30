@@ -108,13 +108,17 @@ int main(int argc, char **argv) {
 	selectedPopulation->inds[i]->fitness = DEFAULT_FITNESS;
     }
 
+    /* replacement */
+    /* TODO */
+
     clearPopulation(population);
     population = selectedPopulation;
     selectedPopulation = NULL;
-
-    /* replacement*/
-    /* TODO */
   }
+
+  best = findBestIndiviual(population);
+  printf("%6d: BEST %10.5f %s\n", g-1, best->fitness, best->phenotype);
+  best = NULL;
 
   clearPopulation(population);
 
