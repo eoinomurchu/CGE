@@ -35,6 +35,8 @@ Population *copyPopulation(Population *);
 
 void clearPopulation(Population *);
 
+void printIndividual(Individual *);
+
 void printPopulation(Population *);
 
 Individual *findBestIndiviual(Population *);

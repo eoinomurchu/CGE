@@ -85,15 +85,27 @@ void clearPopulation(Population *population) {
 /*
  *
  */
+void printIndividual(Individual *individual) {
+  int c;
+  for (c = 0; c < individual->genotype->length; c++)
+    printf("%d ", individual->genotype->codons[c]);
+  printf("\n");
+  if (!individual->valid)
+    printf("\tINVALID\n");
+  else if (individual->phenotype == NULL)
+    printf("\tNOTMAPPED\n");
+  else
+    printf("\t%s\n", individual->phenotype);
+}
+
+/*
+ *
+ */
 void printPopulation(Population *population) {
-  int i, c;
+  int i;
   for (i = 0; i < population->size; i++) {
     printf("%d:\t", i);
-    for (c = 0; c < population->inds[i]->genotype->length; c++)
-      printf("%d ", population->inds[i]->genotype->codons[c]);
-    printf("\n");
-    if (population->inds[i]->valid)
-      printf("\t%s\n", population->inds[i]->phenotype);
+    printIndividual(population->inds[i]);
   }
 }
 
