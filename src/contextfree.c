@@ -6,6 +6,7 @@
 #include "config.h"
 #include "contextfree.h"
 #include "tree.h"
+#include "util.h"
 
 /*
  * Gets a rule based on a nonterminal symbol
@@ -36,7 +37,7 @@ static Rule *addNewRule(CFG *grammar) {
   /* Too myny rules ? */
   if (grammar->count == (grammar->maxSize-1)) {
     grammar->maxSize *= 2;
-    grammar->rules = realloc(grammar->rules, grammar->maxSize*sizeof(Rule*));
+    grammar->rules = reallocOrFail(grammar->rules, grammar->maxSize*sizeof(Rule*));
   }
 
   r = malloc(sizeof(Rule));
@@ -58,7 +59,7 @@ static Production *addNewProduction(Rule *r) {
   /* Too many productions? */
   if (r->count == (r->maxSize-1)) {
     r->maxSize *= 2;
-    r->productions = realloc(r->productions, r->maxSize*sizeof(Production*));
+    r->productions = reallocOrFail(r->productions, r->maxSize*sizeof(Production*));
   }
 
   /* New production */
@@ -79,7 +80,7 @@ static void addNewSymbol(Production *p, char *symbol) {
   /* Too many symbols? */
   if (p->count == (p->maxSize-1)) {
     p->maxSize *= 2;
-    p->symbols = realloc(p->symbols, p->maxSize*sizeof(char*));
+    p->symbols = reallocOrFail(p->symbols, p->maxSize*sizeof(char*));
   }
 
   /* New symbol */
@@ -285,7 +286,7 @@ int mapCFG(Individual *individual) {
   individual->genotype->encodingLength = 0;
   phenotypeSize = 1;
   if (growNode(individual, dt, currNode, &phenotypeSize)) {
-    individual->phenotype = malloc(phenotypeSize*sizeof(char));
+    individual->phenotype = reallocOrFail(individual->phenotype, phenotypeSize*sizeof(char));
     gatherPhenotype(dt->root, individual->phenotype, 0);
     individual->phenotype[phenotypeSize-1] = '\0';
     return true;

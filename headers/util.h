@@ -16,4 +16,7 @@ float randf();
 /* Random double from [0.0, 1.0] */
 double randd();
 
+/* realloc, if the ptr is NULL, show default error message and exit */
+void *reallocOrFail(void *pointer, size_t size);
+
 #endif

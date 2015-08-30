@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "util.h"
 
@@ -28,4 +29,14 @@ float randf() {
 double randd() {
   double d = (double)rand()/(double)RAND_MAX; 
   return d > 1.0 ? 1.0 : d;
+}
+
+void *reallocOrFail(void *pointer, size_t size) {
+  void *newPointer = realloc(pointer, size);
+  if (!newPointer) {
+    free(pointer);
+    perror("realloc failed");
+    exit(EXIT_FAILURE);
+  }
+  return newPointer;
 }
