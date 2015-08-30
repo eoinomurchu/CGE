@@ -14,11 +14,11 @@ static void malformedCode(const char *string) {
  *
  */
 double rpnInterpreter(const char *expr, const double *inputs, const int numberOfInputs) {
-  double stack[2048];
+  double stack[4096];
   int pc = 0;
   double *sp = stack - 1;
 
-  while (pc < strlen(expr) && (sp >= stack-1 && sp < (stack+2048))) {
+  while (pc < strlen(expr) && (sp >= stack-1 && sp < (stack+4096))) {
     char c = expr[pc++];
 
     switch(c) {
