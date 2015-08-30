@@ -34,26 +34,15 @@ double rpnInterpreter(const char *expr, const double *inputs, const int numberOf
     default: malformedCode(expr);
     }
   }
-  //printf("Top of stack (%ld) for input %f: %20.19f %s\n", sp-stack, inputs[0], *sp, expr);
+
   return *sp;
 }
 
 double **generateTrainingCases(const char *target, const Range *range) {
-  double *d, *d2;
   int i;
   double size, input[1];
   double **cases = malloc(range->step * sizeof(double *));
   cases[0] = malloc(2 * range->step * sizeof(double));
-
-  /*  printf("Pointers are at %X, %X,...%X\n", &cases[0], &cases[1],&cases[((int)range->step)-1]);
-  printf("Data is from %X to %X\n", cases[0], (cases[0] + (int)(2 * range->step * sizeof(double))));
-  printf("Doubles are %X\n", sizeof(double));
-  printf("Double pointers are %X\n", sizeof(double*));
-
-  d = 0;
-  d2 = d + 2;
-
-  printf("Double pointer plus two: %X -> %X\n", d, d2);*/
 
   size = range->max - range->min;
   for (i = 0; i < range->step; i++) {
