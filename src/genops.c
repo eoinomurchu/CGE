@@ -4,6 +4,7 @@
 
 #include "config.h"
 #include "genops.h"
+#include "population.h"
 #include "util.h"
 
 /*
@@ -11,11 +12,16 @@
  */
 Population *intflipMutationOperator(Population *population) {
   int i, m;
-  for (i = 0; i < selectedPopulation->size; i++)
-    for (m = 0; m < config.mutationRate; m++)
-      selectedPopulation->inds[i]->genotype->codons[randn(selectedPopulation->inds[i]->genotype->length)] = rand();
 
-  return selectedPopulation;
+  for (i = 0; i < population->size; i++)
+    for (m = 0; m < config.mutationRate; m++) {
+      population->inds[i]->genotype->codons[randn(population->inds[i]->genotype->length)] = rand();
+      if (population->inds[i]->phenotype) {
+	free(population->inds[i]->phenotype);
+	population->inds[i]->phenotype = NULL;
+      }
+    }
+  return population;
 }
 
 /*
@@ -65,14 +71,35 @@ Population *onepointCrossoverOperator(Population *population) {
   int i;
 
   /* We can't crossover without at least two individuals */
-  if (selectedPopulation->size > 1) {
-    for (i = 0; i < selectedPopulation->size - 1; i += 2)
-      if (randf() < config.crossoverProb)  
-	onepointCrossover(selectedPopulation->inds[i]->genotype, selectedPopulation->inds[i+1]->genotype);
+  if (population->size > 1) {
+    for (i = 0; i < population->size - 1; i += 2)
+      if (randf() < config.crossoverProb) {
+	onepointCrossover(population->inds[i]->genotype, population->inds[i+1]->genotype);
 
-    if (selectedPopulation->size % 2 == 1)
-      if (randf() < config.crossoverProb)
-	onepointCrossover(selectedPopulation->inds[i]->genotype, selectedPopulation->inds[randnSafe(i)]->genotype);
+	if (population->inds[i]->phenotype) {
+	  free(population->inds[i]->phenotype);
+	  population->inds[i]->phenotype = NULL;
+	}
+	if (population->inds[i+1]->phenotype) {
+	  free(population->inds[i+1]->phenotype);
+	  population->inds[i+1]->phenotype = NULL;
+	}
+      }
+
+    if (population->size % 2 == 1)
+      if (randf() < config.crossoverProb) {
+	int randIndex = randnSafe(i);
+	onepointCrossover(population->inds[i]->genotype, population->inds[randIndex]->genotype);
+
+	if (population->inds[i]->phenotype) {
+	  free(population->inds[i]->phenotype);
+	  population->inds[i]->phenotype = NULL;
+	}
+	if (population->inds[randIndex]->phenotype) {
+	  free(population->inds[randIndex]->phenotype);
+	  population->inds[randIndex]->phenotype = NULL;
+	}
+      }
   }
   return population;
 }
