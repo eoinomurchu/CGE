@@ -5,7 +5,7 @@
 
 /* Struct for the pipeline, array of op functors */
 typedef struct {
-  Population *(**ops)(Population *, Population *);
+  Population *(**ops)(Population *);
   unsigned int count;
 } Pipeline;
 

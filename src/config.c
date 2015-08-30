@@ -99,7 +99,7 @@ void setPipeline() {
     if (*(c++) == ',')
       numberOfOperators++;
 
-  pipeline->ops = malloc(numberOfOperators*sizeof(void (*)(Individual *)));
+  pipeline->ops = malloc(numberOfOperators*sizeof(void (*)(Population *)));
 
   /* Parse the opertors (comma seperated) */
   previous = config.operators;

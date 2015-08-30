@@ -5,14 +5,12 @@
 #include "tournamentselection.h"
 #include "util.h"
 
-Population *tournamentSelectionOperator(Population *population, Population *selectedPopulation) {
+Population *tournamentSelectionOperator(Population *population) {
   int i;
   Individual *best, *curr;
+  Population *selectedPopulation = malloc(sizeof(Population));
 
-  if (!selectedPopulation) {
-    selectedPopulation = malloc(sizeof(Population));
-    selectedPopulation->inds = malloc(population->size*sizeof(Individual*));
-  }
+  selectedPopulation->inds = malloc(population->size*sizeof(Individual*));
   selectedPopulation->size = 0;
 
   while (selectedPopulation->size < population->size) {

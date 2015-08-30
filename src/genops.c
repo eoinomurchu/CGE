@@ -9,7 +9,7 @@
 /*
  * Operator/Operation function
  */
-Population *intflipMutationOperator(Population *population, Population *selectedPopulation) {
+Population *intflipMutationOperator(Population *population) {
   int i, m;
   for (i = 0; i < selectedPopulation->size; i++)
     for (m = 0; m < config.mutationRate; m++)
@@ -61,7 +61,7 @@ static void onepointCrossover(Genotype *parent, Genotype *spouse) {
 /*
  * Operator Functor
  */
-Population *onepointCrossoverOperator(Population *population, Population *selectedPopulation) {
+Population *onepointCrossoverOperator(Population *population) {
   int i;
 
   /* We can't crossover without at least two individuals */
@@ -74,5 +74,5 @@ Population *onepointCrossoverOperator(Population *population, Population *select
       if (randf() < config.crossoverProb)
 	onepointCrossover(selectedPopulation->inds[i]->genotype, selectedPopulation->inds[randnSafe(i)]->genotype);
   }
-  return selectedPopulation;
+  return population;
 }

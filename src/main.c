@@ -88,9 +88,13 @@ int main(int argc, char **argv) {
     best = NULL;
 
     /* Pipline loop */
+    /* elite selection TODO */
+
     /* selection, genetic ops */
+    selectedPopulation = population;
+
     for (o = 0; o < pipeline->count; o++)
-      selectedPopulation = pipeline->ops[o](population, selectedPopulation);
+      selectedPopulation = pipeline->ops[o](selectedPopulation);
 
     /* mapping and evaluation */
     for (i = 0; i < selectedPopulation->size; i++) {
