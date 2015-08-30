@@ -22,13 +22,21 @@ static Genotype *copyGenotype(Genotype *genotype) {
 /*
  *
  */
+static Phenotype *copyPhenotype(Phenotype *phenotype) {
+  if (phenotype == NULL) return NULL;
+  return strdup(phenotype);
+}
+
+/*
+ *
+ */
 Individual *copyIndividual(Individual *individual) {
   Individual *newIndividual = malloc(sizeof(Individual));
   newIndividual->valid = individual->valid;
   newIndividual->fitness = individual->fitness;
   newIndividual->genotype = copyGenotype(individual->genotype);
-  /* TODO copy phenotype and tree */
-  newIndividual->phenotype = NULL;
+  newIndividual->phenotype = copyPhenotype(individual->phenotype);
+  /* TODO copy tree */
   newIndividual->derivationTree = NULL;
 
   return newIndividual;
@@ -38,25 +46,14 @@ Individual *copyIndividual(Individual *individual) {
  *
  */
 Population *copyPopulation(Population* population) {
-  int i, c;
+  int i;
 
   Population *newPopulation = malloc(sizeof(Population));
   newPopulation->inds =  malloc(population->size * sizeof(Individual*));
   newPopulation->size = population->size;
 
-  for (i = 0; i < newPopulation->size; i++) {
+  for (i = 0; i < newPopulation->size; i++)
     newPopulation->inds[i] = copyIndividual(population->inds[i]);
-
-    printf("%d:\t", i);
-    for (c = 0; c < population->inds[i]->genotype->length; c++)
-      printf("%d ", population->inds[i]->genotype->codons[c]);
-    printf("\n");
-
-    printf("%d:\t", i);
-    for (c = 0; c < newPopulation->inds[i]->genotype->length; c++)
-      printf("%d ", newPopulation->inds[i]->genotype->codons[c]);
-    printf("\n");
-  }
 
   return newPopulation;
 }
